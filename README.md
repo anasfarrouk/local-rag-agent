@@ -1,5 +1,5 @@
 # Local RAG Agent
-This is an AI Agent that runs completely on your device. It is also equipped with RAG, meaning it can retrieve data from the documents that you provide it to generate more accurate responses and to reduce hallucinations.
+This is an AI Agent that runs completely on your device. It is also equipped with RAG, meaning it can retrieve data from the documents that you provide to it, in order to generate more accurate responses and to reduce hallucinations.
 ## Requirements ✅
 - uv >= 0.9.26
 - python >= 3.14

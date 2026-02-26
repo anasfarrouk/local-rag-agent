@@ -33,12 +33,12 @@ index = VectorStoreIndex.from_documents(documents)
 # Query the index
 query_engine = index.as_query_engine()
 
-# search tool
+# Documents searching tool
 async def search_documents(query: str) -> str:
     response = await query_engine.aquery(query)
     return str(response)
 
-# Create an agent workflow with our calculator tool
+# Create an agent workflow
 agent = FunctionAgent(
     tools = [search_documents],
     llm = Ollama(

@@ -8,9 +8,9 @@ import asyncio, uvloop, os, logging
 
 
 # set the local models and the url of the server
-llm = os.getenv("LLM", "qwen3:0.6b")
-embedding = os.getenv("EMBEDDING", "qwen3-embedding:0.6b")
-url = os.getenv("URL", "http://localhost:11434")
+llm: str = os.getenv("LLM", "qwen3:0.6b")
+embedding: str = os.getenv("EMBEDDING", "qwen3-embedding:0.6b")
+url: str = os.getenv("URL", "http://localhost:11434")
 
 logging.disable(logging.CRITICAL)
 
@@ -35,6 +35,10 @@ query_engine = index.as_query_engine()
 
 # search tool
 async def search_documents(query: str) -> str:
+    '''
+    This function search the given documents for an answer the query parameter.
+    It returns the answer it found from the documents.
+    '''
     response = await query_engine.aquery(query)
     return str(response)
 
@@ -45,19 +49,21 @@ agent = FunctionAgent(
         model=llm,
         base_url=url,
     ),
-    system_prompt = "You are a helpful assistant. You use the given tool by calling search_documents and provide the question you are asked as query"
+    system_prompt = "You are a helpful assistant. You can use the given tool by calling search_documents and provide the question you are asked as query"
 )
 
 # create context
 ctx = Context(agent)
 
 # start the conversation
-async def main():
+async def main() -> None:
     while True:
-        prompt:str = input("User >>> ") 
-        if prompt == "/bye":
+        prompt: str = input("\033[32mUser \033[34m>>> \033[0m") 
+        if prompt == "/exit":
             break
-        response = await agent.run(prompt, ctx=ctx)
-        print(f"Agent >>> {response}")
+        response: str = await agent.run(prompt, ctx=ctx)
+        print(f"\033[33mAgent \033[34m>>> \033[0m{response}")
 
-asyncio.run(main(), loop_factory=uvloop.new_event_loop)
+if __name__ == "__main__":
+    uvloop.run(main())
+

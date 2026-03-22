@@ -8,5 +8,6 @@ dependencies = [
     "llama-index>=0.14.15",
     "llama-index-embeddings-ollama>=0.8.6",
     "llama-index-llms-ollama>=0.9.1",
+    "mypy>=1.19.1",
     "uvloop>=0.22.1",
 ]
